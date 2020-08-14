@@ -1,10 +1,14 @@
 import React from 'react'
+import { Container, Snackbar } from '@material-ui/core'
+import Header from './components/Header'
+import SendTweet from './components/SendTweet'
 
 function App () {
     return (
-        <div>
-            <h1>Empezamos con Tweets</h1>
-        </div>
+        <Container className="tweets-simulator" maxWidth={false}>
+            <Header />
+            <SendTweet />
+        </Container>
     )
 }
 

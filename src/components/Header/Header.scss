@@ -1,0 +1,19 @@
+.header {
+    position: fixed;
+    display: flex;
+    top:0;
+    left:0;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(46, 125, 209);
+    z-index: 1;
+
+    img {
+        width: 70px;
+        margin-right: 20px;
+    }
+    h1{
+        color: #fff;
+    } 
+}
