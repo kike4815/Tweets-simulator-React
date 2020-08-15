@@ -58,7 +58,7 @@ function App () {
                     vertical: 'top',
                     horizontal: 'right'
                 }}
-                autoHideDuration={2000}
+                autoHideDuration={3000}
                 // message={<span id="message-id">{toastProps.text}</span>}
                 onClose={handleClose}
             >
