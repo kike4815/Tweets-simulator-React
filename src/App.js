@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Container, Snackbar } from '@material-ui/core'
 import Header from './components/Header'
 import SendTweet from './components/SendTweet'
 import MuiAlert from '@material-ui/lab/Alert'
+import { TWEETS_STORAGE } from './utils/constants'
+import ListTweets from './components/ListTweets/ListTweets'
 
 function App () {
     const [ toastProps, setToastProps ] = useState({
@@ -10,6 +12,26 @@ function App () {
         text: null,
         severity: null
     })
+
+    const [ allTweets, setAllTweets ] = useState([])
+    const [ reload, setReload ] = useState(false)
+
+    useEffect(
+        () => {
+            const alltweetsStorage = localStorage.getItem(TWEETS_STORAGE)
+            const alltweetsArray = JSON.parse(alltweetsStorage)
+            setAllTweets(alltweetsArray)
+            setReload(false)
+        },
+        [ reload ]
+    )
+
+    const deleteTweet = (index) => {
+        allTweets.splice(index, 1)
+        setAllTweets(allTweets)
+        localStorage.setItem(TWEETS_STORAGE, JSON.stringify(allTweets))
+        setReload(true)
+    }
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -20,7 +42,7 @@ function App () {
             text: null
         })
     }
-    //FUNCTION TO POP WITH COLOR THE ALERT
+    //FUNCTION TO POP WITH COLOUR THE ALERT
     function Alert (props) {
         return <MuiAlert elevation={6} variant="filled" {...props} />
     }
@@ -28,7 +50,8 @@ function App () {
     return (
         <Container className="tweets-simulator" maxWidth={false}>
             <Header />
-            <SendTweet setToastProps={setToastProps} />
+            <SendTweet setToastProps={setToastProps} allTweets={allTweets} />
+            <ListTweets allTweets={allTweets} deleteTweet={deleteTweet} />
             <Snackbar
                 open={toastProps.open}
                 anchorOrigin={{

@@ -9,7 +9,7 @@ import { TWEETS_STORAGE } from '../../utils/constants'
 import './SendTweet.scss'
 
 export default function SendTweet (props) {
-    const { setToastProps } = props
+    const { setToastProps, allTweets } = props
     const [ isOpen, setIsOpen ] = useState(false)
 
     const openModal = () => {
@@ -22,7 +22,11 @@ export default function SendTweet (props) {
     const sendTweet = (event, formValue) => {
         event.preventDefault()
         const { name, tweet } = formValue
-        let AllTweets = []
+        let AllTweetsArray = []
+
+        if (allTweets) {
+            AllTweetsArray = allTweets
+        }
 
         if (!name || !tweet) {
             setToastProps({
@@ -32,9 +36,8 @@ export default function SendTweet (props) {
             })
         } else {
             formValue.time = moment()
-            AllTweets.push(formValue)
-            localStorage.setItem(TWEETS_STORAGE, JSON.stringify(AllTweets))
-            console.log('enviado :)')
+            AllTweetsArray.push(formValue)
+            localStorage.setItem(TWEETS_STORAGE, JSON.stringify(AllTweetsArray))
             setToastProps({
                 open: true,
                 text: 'Tweet enviado correctamente',
